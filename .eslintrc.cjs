@@ -21,5 +21,8 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 'latest'
+  },
+  rules: {
+    "vue/padding-line-between-blocks": ["error", "always"]
   }
 }

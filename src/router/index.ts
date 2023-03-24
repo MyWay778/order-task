@@ -16,9 +16,14 @@ const router = createRouter({
       component: LoginPage
     },
     {
-      path: '/orders',
+      path: '/order/all',
       name: 'orders',
       component: () => import('@/pages/OrderList.vue')
+    },
+    {
+      path: '/order/add',
+      name: 'add order',
+      component: () => import('@/pages/AddOrder.vue')
     },
     {
       path: '/about',

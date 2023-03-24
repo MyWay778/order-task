@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{
-  color?: 'white';
+  color?: 'white' | 'gray';
   icon?: boolean;
 }>();
 </script>
@@ -24,6 +24,10 @@ const props = defineProps<{
 
   &.white {
     background-color: var(--color-white);
+  }
+
+  &.gray {
+    background-color: var(--color-gray-dark);
   }
 
   &.icon {

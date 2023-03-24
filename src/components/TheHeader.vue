@@ -5,8 +5,8 @@ import ButtonVue from '@/components/UI/ButtonVue.vue';
   <header :class="$style.header">
     <div :class="['container', $style.inner]">
       <nav :class="$style.nav">
-        <a href="order/all">Все заказы</a>
-        <a href="order/add">Добавить заказ</a>
+        <a href="/order/all">Все заказы</a>
+        <a href="/order/add">Добавить заказ</a>
       </nav>
       <div :class="$style.userPanel">
         <span>ИмяФамилия</span>

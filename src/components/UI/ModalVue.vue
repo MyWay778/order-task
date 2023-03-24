@@ -6,6 +6,7 @@
 </template>
 <style module>
 .modal {
-  position: relative;
+  position: absolute;
+  background-color: var(--color-gray-dark);
 }
 </style>

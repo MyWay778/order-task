@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import ButtonVue from '@/components/UI/ButtonVue.vue';
 import IconClose from '@/components/icons/IconClose.vue';
+import IconCheck from '@/components/icons/IconCheck.vue';
+import ModalVue from '@/components/UI/ModalVue.vue';
 </script>
 
 <template>
@@ -21,16 +23,28 @@ import IconClose from '@/components/icons/IconClose.vue';
         <td>11 ноября 2022</td>
         <td>Выполнено</td>
         <td>привезти не позднее 18:00</td>
-        <div :class="$style.controls">
-          <ButtonVue color="white" icon>
-            <IconClose />
-          </ButtonVue>
-          <ButtonVue color="white" icon>
-            <IconClose />
-          </ButtonVue>
-        </div>
+        <td :class="$style.controlContainer">
+          <div :class="$style.controls">
+            <ButtonVue color="white" icon>
+              <IconCheck />
+            </ButtonVue>
+            <ButtonVue color="white" icon>
+              <IconClose />
+            </ButtonVue>
+          </div>
+        </td>
       </tr>
     </table>
+
+    <ModalVue>
+      <div :class="$style.confirmDeleting">
+        <p>Вы действительно хотите удалить заказ?</p>
+        <div :class="$style.controls">
+          <ButtonVue color="white">Ок</ButtonVue>
+          <ButtonVue color="white">Отмена</ButtonVue>
+        </div>
+      </div>
+    </ModalVue>
   </main>
 </template>
 <style module lang="scss">
@@ -46,6 +60,31 @@ import IconClose from '@/components/icons/IconClose.vue';
   td {
     padding: 9px 25px;
     border: 1px solid black;
+  }
+
+  td {
+    &.controlContainer {
+      border: none;
+    }
+
+    .controls {
+      display: flex;
+      column-gap: 6px;
+    }
+  }
+}
+
+.confirmDeleting {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 335px;
+  height: 215px;
+  padding: 64px 44px 42px;
+
+  .controls {
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>
