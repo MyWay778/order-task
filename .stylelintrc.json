@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-hudochenkov/order",
+    "stylelint-config-recommended-vue/scss"
+  ],
+  "plugins": ["stylelint-scss"],
+  "overrides": [
+    {
+      "files": ["*.vue", "**/*.vue"]
+    }
+  ],
+  "rules": {
+    "selector-class-pattern": "^[a-z][a-zA-Z0-9]+$"
+  }
+}
