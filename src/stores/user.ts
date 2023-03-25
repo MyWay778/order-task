@@ -1,10 +1,8 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import type { IUserModal } from '@/typings/userModal';
-
-const baseURL = 'http://localhost:3000';
-const authApi = '/auth';
+import type { UserModelInterface } from '@/typings/userModel';
+import { api } from '@/config/axios';
 
 interface IUserAuth {
   login: string;
@@ -17,27 +15,62 @@ interface IError {
 }
 
 export const useUserStore = defineStore('user', () => {
-  const user = ref<IUserModal | null>(null);
+  const user = ref<UserModelInterface | null>(null);
   const error = ref<IError | null>(null);
 
-  async function auth(userAuth: IUserAuth) {
+  const isAuthenticated = computed(() => {
+    if (user.value !== null) {
+      return true;
+    }
+    return false;
+  });
+
+  const isAdmin = computed(() => user.value?.role === 'admin');
+
+  async function login(userAuth: IUserAuth) {
     try {
-      const { data } = await axios.post<IUserModal>(authApi, userAuth, { baseURL });
+      const { data } = await axios.post<UserModelInterface>(api.login, userAuth, {
+        withCredentials: true
+      });
+
       user.value = data;
+      error.value = null;
       return true;
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        console.log('error message: ', e);
         error.value = {
           status: e.response?.status || 0,
           message: e.response?.data.message || 'Неизвестная ошибка'
         };
       } else {
-        console.log('unexpected error: ', e);
+        console.warn('unexpected error: ', e);
       }
       return false;
     }
   }
 
-  return { user, error, auth };
+  async function auth() {
+    try {
+      const { data } = await axios.get<UserModelInterface>(api.refresh, {
+        withCredentials: true
+      });
+      user.value = data;
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async function logout() {
+    try {
+      await axios.get<UserModelInterface>(api.logout, {
+        withCredentials: true
+      });
+      user.value = null;
+    } catch (e) {
+      console.warn('logout error: ', e);
+    }
+  }
+
+  return { user, error, isAuthenticated, isAdmin, login, auth, logout };
 });

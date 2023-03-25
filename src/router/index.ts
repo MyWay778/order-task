@@ -1,37 +1,32 @@
 import LoginPage from '@/pages/LoginPage.vue';
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import { authorizationGuard, authorizedToLoginRedirect, notFoundRedirect } from './redirects';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      redirect: { name: 'login' }
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      redirect: notFoundRedirect
     },
     {
       path: '/login',
       name: 'login',
-      component: LoginPage
+      component: LoginPage,
+      beforeEnter: authorizedToLoginRedirect
     },
     {
-      path: '/order/all',
+      path: '/orders',
       name: 'orders',
-      component: () => import('@/pages/OrderList.vue')
+      component: () => import('@/pages/OrderList.vue'),
+      beforeEnter: authorizationGuard
     },
     {
       path: '/order/add',
       name: 'add order',
-      component: () => import('@/pages/AddOrder.vue')
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
+      component: () => import('@/pages/AddOrder.vue'),
+      beforeEnter: authorizationGuard
     }
   ]
 });

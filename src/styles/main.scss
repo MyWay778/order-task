@@ -1,6 +1,7 @@
 @import url('./variables.scss');
 @import url('./shared.scss');
 
+/* CONFIG */
 *,
 *::before,
 *::after {
@@ -22,6 +23,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* GENERAL */
 a {
   color: inherit;
   text-decoration: none;

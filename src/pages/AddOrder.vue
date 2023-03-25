@@ -1,22 +1,97 @@
 <script setup lang="ts">
-  import LoginForm from '@/components/LoginForm.vue';
   import ButtonVue from '@/components/UI/ButtonVue.vue';
   import InputVue from '@/components/UI/InputVue.vue';
+  import ModalVue from '@/components/UI/ModalVue.vue';
+  import useValidation from '@/composables/useValidation';
+  import getDate from '@/helpers/getDate';
+  import { userOrderStore, type NewOrderInterface } from '@/stores/orders';
+  import { reactive, ref } from 'vue';
+
+  const order = reactive({
+    name: '',
+    address: '',
+    comment: ''
+  });
+
+  const isShowErrors = ref(false);
+  const errors = useValidation(order, {
+    name: {
+      required: true
+    },
+    address: {
+      required: true,
+      min: 5
+    }
+  });
+
+  const orderStore = userOrderStore();
+
+  const onSubmit = async () => {
+    if (Object.keys(errors).length) {
+      isShowErrors.value = true;
+      return;
+    }
+
+    const newOrder: NewOrderInterface = { ...order, date: getDate(), status: 'Новый' };
+    const success = await orderStore.addOrder(newOrder);
+    if (success) {
+      modalMessage.value = 'Заказ успешно добавлен!';
+      resetForm();
+    } else {
+      modalMessage.value = 'Произошла ошибка, попробуйте еще раз...';
+    }
+  };
+
+  const resetForm = () => {
+    (Object.keys(order) as Array<keyof typeof order>).forEach((key) => {
+      order[key] = '';
+    });
+
+    isShowErrors.value = false;
+  };
+
+  // Модальное окно
+  const modalMessage = ref('');
+
+  const clearModalMessage = () => {
+    modalMessage.value = '';
+  };
 </script>
 
 <template>
   <main :class="['container', $style.container]">
-    <form :class="$style.form">
+    <form :class="$style.form" @submit.prevent>
       <h3 :class="$style.title">Добавить заказ</h3>
-      <InputVue placeholder="Введите ваше имя" />
-      <InputVue placeholder="Введите ваш адрес" />
-      <InputVue placeholder="Комментарий" />
-      <ButtonVue :class="$style.button" color="gray">Добавить заказ</ButtonVue>
+
+      <InputVue
+        v-model.trim="order.name"
+        :error-message="isShowErrors ? errors['name'] : ''"
+        placeholder="Введите ваше имя"
+        required />
+
+      <InputVue
+        v-model.trim="order.address"
+        :error-message="isShowErrors ? errors['address'] : ''"
+        placeholder="Введите ваш адрес"
+        required />
+
+      <InputVue v-model.trim="order.comment" placeholder="Комментарий" />
+
+      <ButtonVue :class="$style.button" @click="onSubmit" type="button" color="gray"
+        >Добавить заказ</ButtonVue
+      >
     </form>
+
+    <ModalVue v-if="modalMessage" :class="$style.modal">
+      <div :class="$style.modalContainer">
+        <p :class="$style.message">{{ modalMessage }}</p>
+        <ButtonVue @click="clearModalMessage" color="white">Ок</ButtonVue>
+      </div>
+    </ModalVue>
   </main>
 </template>
 
-<style module>
+<style module lang="scss">
   .container {
     height: 100vh;
     padding: 45px;
@@ -38,5 +113,20 @@
 
   .button {
     align-self: flex-start;
+  }
+
+  .modal {
+    top: 20%;
+    min-width: 250px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .modalContainer {
+    text-align: center;
+
+    .message {
+      margin-bottom: 30px;
+    }
   }
 </style>

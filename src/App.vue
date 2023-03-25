@@ -1,18 +1,16 @@
 <script setup lang="ts">
-  import { RouterLink, RouterView } from 'vue-router';
-  import HelloWorld from './components/HelloWorld.vue';
-  import TheHeader from './components/TheHeader.vue';
+  import { RouterView } from 'vue-router';
+  import TheHeader from '@/components/TheHeader.vue';
+  import { useInsertAccessToken } from '@/composables/useInsertAccessToken';
   import { useUserStore } from '@/stores/user';
-  import { computed } from 'vue';
 
   const userStore = useUserStore();
-  const showHeader = computed(() => {
-    if (userStore.user) return true;
-    return false;
-  });
+
+  // установка access токена в заголовки
+  useInsertAccessToken();
 </script>
 
 <template>
-  <TheHeader v-if="showHeader" />
+  <TheHeader v-if="userStore.isAuthenticated" />
   <RouterView />
 </template>

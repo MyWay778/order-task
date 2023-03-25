@@ -1,16 +1,1 @@
-[
-  {
-    "id": 1,
-    "login": "admin",
-    "password": "admin",
-    "name": "Администратор",
-    "role": 1
-  },
-  {
-    "id": 2,
-    "login": "user",
-    "password": "user",
-    "name": "Пользователь",
-    "role": 2
-  }
-]
+[{"id":1,"login":"admin","password":"$2b$10$cbHpZdYWte.atpJQyuyMUObvytx2mScN6tUSzs6FACuvj8BeHdOye","name":"Иван Иванов","role":"admin","refreshToken":""},{"id":2,"login":"user","password":"$2b$10$MLgSvZKATY/zWIVn5tiuIO1OEbEaGoLOzaWZ6pbZBBwDz4W1tAKde","name":"Петр Петров","role":"user","refreshToken":""}]

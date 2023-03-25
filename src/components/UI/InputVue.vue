@@ -1,5 +1,7 @@
 <script setup lang="ts">
-  defineProps<{
+  import { ref, watch } from 'vue';
+
+  const props = defineProps<{
     modelValue?: string;
     errorMessage?: string;
   }>();
@@ -19,7 +21,7 @@
   </div>
 </template>
 
-<style module>
+<style module lang="scss">
   .container {
     position: relative;
     padding-bottom: 18px;
@@ -39,5 +41,6 @@
     bottom: 0;
     left: 0;
     color: var(--color-error);
+    white-space: nowrap;
   }
 </style>
