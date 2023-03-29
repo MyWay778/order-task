@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "run-p client:dev server:dev",
+    "client:dev": "vite",
     "build": "run-s build-only server:build",
     "preview": "vite preview",
     "build-only": "vite build",
