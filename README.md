@@ -43,3 +43,5 @@ Backend: http://localhost:3000/
 ```sh
 npm run build && npm start
 ```
+
+![2023-03-29_17-10](https://user-images.githubusercontent.com/62506380/228475238-5268cf9b-9df6-4b68-9744-8b9cc6709d87.png)
