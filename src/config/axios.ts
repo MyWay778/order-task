@@ -1,8 +1,11 @@
 import axios from 'axios';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+if (!apiUrl) console.warn('api url not configured!');
+
 export const api = {
-  baseUrl: 'http://localhost:3000',
-  login: '/login',
+  baseUrl: apiUrl,
+  login: `/login`,
   auth: '/auth',
   refresh: '/refresh',
   logout: '/logout',
@@ -11,7 +14,6 @@ export const api = {
 
 export function setupAxios() {
   axios.defaults.baseURL = api.baseUrl;
-  // axios.defaults.withCredentials = true;
 }
 
 export function setAuthToken(token: string) {

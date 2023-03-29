@@ -55,7 +55,9 @@
           v-model.trim="user.login"
           placeholder="username"
           :error-message="isShowErrors ? errors.login : ''"
-          required />
+          required
+          autocomplete="name"
+          autofocus="true" />
 
         <!-- Пароль -->
         <InputVue
@@ -63,7 +65,8 @@
           placeholder="password"
           type="password"
           :error-message="isShowErrors ? errors.password : ''"
-          required />
+          required
+          autocomplete="password" />
 
         <ButtonVue :class="$style.button" type="button" color="white" @click="onSubmit" />
       </form>

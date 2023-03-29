@@ -12,8 +12,7 @@
       props.color ? $style[props.color] : null,
       { [$style[props.color || '']]: props.color },
       { [$style.icon]: props.icon }
-    ]"
-  >
+    ]">
     <slot>Кнопка</slot>
   </button>
 </template>
