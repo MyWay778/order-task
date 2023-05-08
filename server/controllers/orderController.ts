@@ -50,7 +50,7 @@ export function handleDelete(req: Request, res: Response): Response {
 
   const foundUser = users.find((u) => u.id === Number(user));
   if (!foundUser) {
-    return res.sendStatus(500);
+    return res.sendStatus(401);
   }
   if (foundUser?.role !== 'admin') {
     return res.sendStatus(403);

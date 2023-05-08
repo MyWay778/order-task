@@ -5,7 +5,7 @@
   import ModalVue from '@/components/UI/ModalVue.vue';
   import { useUserStore } from '@/stores/user';
   import { userOrderStore } from '@/stores/orders';
-  import { onMounted, ref, watch } from 'vue';
+  import { onMounted, ref } from 'vue';
   import type { OrderModelKeysType } from '@/typings/orderModel';
   import TableCell from '@/components/UI/table/TableCell.vue';
   import PageContainer from '@/components/UI/PageContainer.vue';
@@ -33,36 +33,28 @@
     orderStore.changeStatus(id, 'Выполнен');
   };
 
-  // Модальное окно
-  const isOpenModal = ref(false);
-
-  watch(isOpenModal, () => {
-    if (isOpenModal.value) {
-      window.addEventListener('click', onCloseModal);
-    } else {
-      window.removeEventListener('click', onCloseModal);
-    }
-  });
-
-  const onCloseModal = (): void => {
-    isOpenModal.value = false;
-
-    orderToDelete = 0;
-  };
-
+  // Удаление, подтверждение удаления
   let orderToDelete = 0;
 
-  // Удаление, подтверждение
   const onDelete = (id: number, event: Event): void => {
     event.stopPropagation();
 
-    isOpenModal.value = true;
+    showDeleteModal.value = true;
     orderToDelete = id;
   };
 
   const onConfirmDelete = (): void => {
     orderStore.deleteOrder(orderToDelete);
-    onCloseModal();
+    onCloseDeleteModal();
+  };
+
+  // Модальное окно удаления
+  const showDeleteModal = ref(false);
+
+  const onCloseDeleteModal = (): void => {
+    showDeleteModal.value = false;
+
+    orderToDelete = 0;
   };
 </script>
 
@@ -128,12 +120,12 @@
     <p v-else>Заказов нет</p>
 
     <!-- Модалка подтверждения удаления -->
-    <ModalVue v-if="isOpenModal" @click.stop>
+    <ModalVue :show-modal="showDeleteModal" @outside-click="onCloseDeleteModal">
       <div :class="$style.confirmDeleting">
         <p>Вы действительно хотите удалить заказ № {{ orderToDelete }}?</p>
         <div :class="$style.rowControls">
           <ButtonVue color="white" @click="onConfirmDelete">Ок</ButtonVue>
-          <ButtonVue color="white" @click="onCloseModal">Отмена</ButtonVue>
+          <ButtonVue color="white" @click="onCloseDeleteModal">Отмена</ButtonVue>
         </div>
       </div>
     </ModalVue>
@@ -141,11 +133,6 @@
 </template>
 
 <style module lang="scss">
-  .container {
-    height: calc(100vh - 63px);
-    padding: 45px;
-  }
-
   .table {
     border-collapse: collapse;
 

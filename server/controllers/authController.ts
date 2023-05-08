@@ -77,7 +77,7 @@ export const handleRefreshToken = (req: Request, res: Response): Response | void
     if (!process.env.ACCESS_TOKEN_SECRET) return res.sendStatus(500);
 
     const accessToken = jwt.sign(
-      { username: (decoded as ITokenPayload).user },
+      { user: (decoded as ITokenPayload).user },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '30s' }
     );

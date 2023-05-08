@@ -1,10 +1,35 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { onMounted, onUnmounted } from 'vue';
+
+  defineProps<{
+    showModal: boolean;
+  }>();
+
+  const emit = defineEmits<{
+    (event: 'outside-click'): void;
+  }>();
+
+  // Клик вне модального окна
+  function notifyOfOutsideModalClick(): void {
+    emit('outside-click');
+  }
+
+  onMounted(() => {
+    window.addEventListener('click', notifyOfOutsideModalClick);
+  });
+
+  onUnmounted(() => {
+    window.removeEventListener('click', notifyOfOutsideModalClick);
+  });
+</script>
 
 <template>
-  <aside :class="$style.modal" v-bind="$attrs">
-    <slot></slot>
-  </aside>
-  <div :class="$style.overlay"></div>
+  <template v-if="showModal">
+    <aside :class="$style.modal" v-bind="$attrs" @click.stop>
+      <slot></slot>
+    </aside>
+    <div :class="$style.overlay"></div>
+  </template>
 </template>
 
 <style module>

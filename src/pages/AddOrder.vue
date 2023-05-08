@@ -4,7 +4,7 @@
   import ModalVue from '@/components/UI/ModalVue.vue';
   import useValidation from '@/composables/useValidation';
   import { userOrderStore, type NewOrderInterface } from '@/stores/orders';
-  import { reactive, ref } from 'vue';
+  import { computed, reactive, ref } from 'vue';
   import DateService from '@/helpers/DateService';
 
   const order = reactive({
@@ -52,6 +52,7 @@
 
   // Модальное окно
   const modalMessage = ref('');
+  const showMessageModal = computed(() => Boolean(modalMessage.value));
 
   const clearModalMessage = (): void => {
     modalMessage.value = '';
@@ -82,7 +83,10 @@
       >
     </form>
 
-    <ModalVue v-if="modalMessage" :class="$style.modal">
+    <ModalVue
+      :class="$style.modal"
+      :show-modal="showMessageModal"
+      @outside-click="clearModalMessage">
       <div :class="$style.modalContainer">
         <p :class="$style.message">{{ modalMessage }}</p>
         <ButtonVue @click="clearModalMessage" color="white">Ок</ButtonVue>

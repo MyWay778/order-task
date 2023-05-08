@@ -1,1 +1,18 @@
-[{"id":1,"login":"admin","password":"$2b$10$cbHpZdYWte.atpJQyuyMUObvytx2mScN6tUSzs6FACuvj8BeHdOye","name":"Иван Иванов","role":"admin","refreshToken":""},{"id":2,"login":"user","password":"$2b$10$MLgSvZKATY/zWIVn5tiuIO1OEbEaGoLOzaWZ6pbZBBwDz4W1tAKde","name":"Петр Петров","role":"user","refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoyLCJpYXQiOjE2ODAwNzY1NjksImV4cCI6MTY4MDE2Mjk2OX0.ORHu4ezWZtQg4BMxUnWjU265ogNeLWQnPNSd9gPg94I"}]
+[
+  {
+    "id": 1,
+    "login": "admin",
+    "password": "$2b$10$cbHpZdYWte.atpJQyuyMUObvytx2mScN6tUSzs6FACuvj8BeHdOye",
+    "name": "Иван Иванов",
+    "role": "admin",
+    "refreshToken": ""
+  },
+  {
+    "id": 2,
+    "login": "user",
+    "password": "$2b$10$MLgSvZKATY/zWIVn5tiuIO1OEbEaGoLOzaWZ6pbZBBwDz4W1tAKde",
+    "name": "Петр Петров",
+    "role": "user",
+    "refreshToken": ""
+  }
+]
