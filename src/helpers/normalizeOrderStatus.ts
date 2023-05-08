@@ -1,10 +1,12 @@
 import type { OrderStatusType } from '@/typings/orderModel';
 
-const orderStatuses: Record<string, OrderStatusType> = {
+type RowStatusType = 'new' | 'completed';
+
+const orderStatuses: Record<RowStatusType, OrderStatusType> = {
   new: 'Новый',
   completed: 'Выполнен'
 };
 
-export function normalizeOrderStatus(status: OrderStatusType): OrderStatusType {
+export function normalizeOrderStatus(status: RowStatusType): OrderStatusType {
   return orderStatuses[status];
 }
