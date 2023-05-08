@@ -12,14 +12,14 @@ export const api = {
   orders: '/orders'
 };
 
-export function setupAxios() {
+export function setupAxios(): void {
   axios.defaults.baseURL = api.baseUrl;
 }
 
-export function setAuthToken(token: string) {
+export function setAuthToken(token: string): void {
   axios.defaults.headers.common['Authorization'] = token;
 }
 
-export function removeAuthToken() {
+export function removeAuthToken(): void {
   axios.defaults.headers.common['Authorization'] = undefined;
 }

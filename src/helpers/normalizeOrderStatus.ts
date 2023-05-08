@@ -5,6 +5,6 @@ const orderStatuses: Record<string, OrderStatusType> = {
   completed: 'Выполнен'
 };
 
-export function normalizeOrderStatus(status: OrderStatusType) {
+export function normalizeOrderStatus(status: OrderStatusType): OrderStatusType {
   return orderStatuses[status];
 }

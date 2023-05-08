@@ -1,4 +1,4 @@
-import parseDate from './parseDate';
+import DateService from './DateService';
 
 const sortFunctions = {
   byText: <K extends string, T extends { [key in K]: string }>(
@@ -21,12 +21,16 @@ const sortFunctions = {
     return copy;
   },
 
-  byDate: <K extends string, T extends { [key in K]: string }>(arr: T[], prop: K, mode = 'asc') => {
+  byDate: <K extends string, T extends { [key in K]: string }>(
+    arr: T[],
+    prop: K,
+    mode = 'asc'
+  ): T[] => {
     const copy = [...arr];
 
     copy.sort((a, b) => {
-      const aDate = parseDate(a[prop]);
-      const bDate = parseDate(b[prop]);
+      const aDate = DateService.parse(a[prop]);
+      const bDate = DateService.parse(b[prop]);
       let res = 0;
 
       if (aDate < bDate) {

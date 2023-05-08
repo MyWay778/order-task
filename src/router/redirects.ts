@@ -1,7 +1,11 @@
 import { useUserStore } from '@/stores/user';
 import type { RouteLocationNormalized } from 'vue-router';
 
-export function notFoundRedirect() {
+type redirectType = {
+  name: string;
+};
+
+export function notFoundRedirect(): redirectType & { params?: {} } {
   const user = useUserStore();
 
   if (user.isAuthenticated) {
@@ -12,7 +16,7 @@ export function notFoundRedirect() {
   }
 }
 
-export async function authorizedToLoginRedirect() {
+export async function authorizedToLoginRedirect(): Promise<redirectType | void> {
   const user = useUserStore();
 
   if (user.isAuthenticated) {
@@ -26,7 +30,9 @@ export async function authorizedToLoginRedirect() {
   }
 }
 
-export async function authorizationGuard(to: RouteLocationNormalized) {
+export async function authorizationGuard(
+  to: RouteLocationNormalized
+): Promise<redirectType | RouteLocationNormalized | void> {
   const user = useUserStore();
 
   if (!user.isAuthenticated) {

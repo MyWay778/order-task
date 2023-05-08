@@ -19,7 +19,7 @@
   });
 
   // Сортировка
-  const onSort = (property: OrderModelKeysType) => {
+  const onSort = (property: OrderModelKeysType): void => {
     const { filter } = orderStore;
     if (filter.property !== property) {
       orderStore.setFilter(property, 'asc');
@@ -29,7 +29,7 @@
   };
 
   // Изменение статуса
-  const onComplete = (id: number) => {
+  const onComplete = (id: number): void => {
     orderStore.changeStatus(id, 'Выполнен');
   };
 
@@ -44,7 +44,7 @@
     }
   });
 
-  const onCloseModal = () => {
+  const onCloseModal = (): void => {
     isOpenModal.value = false;
 
     orderToDelete = 0;
@@ -53,14 +53,14 @@
   let orderToDelete = 0;
 
   // Удаление, подтверждение
-  const onDelete = (id: number, event: Event) => {
+  const onDelete = (id: number, event: Event): void => {
     event.stopPropagation();
 
     isOpenModal.value = true;
     orderToDelete = id;
   };
 
-  const onConfirmDelete = () => {
+  const onConfirmDelete = (): void => {
     orderStore.deleteOrder(orderToDelete);
     onCloseModal();
   };

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { ITokenPayload } from '../typings/jwt';
 
-const verifyJWT = (req: Request, res: Response, next: NextFunction) => {
+const verifyJWT = (req: Request, res: Response, next: NextFunction): Response | void => {
   const token = req.headers['authorization'];
   if (!token) return res.sendStatus(401);
 

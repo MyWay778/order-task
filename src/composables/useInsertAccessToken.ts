@@ -2,7 +2,7 @@ import { removeAuthToken, setAuthToken } from '@/config/axios';
 import { useUserStore } from '@/stores/user';
 import { watch } from 'vue';
 
-export function useInsertAccessToken() {
+export function useInsertAccessToken(): void {
   const userStore = useUserStore();
 
   watch(

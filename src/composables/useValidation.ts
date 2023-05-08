@@ -13,21 +13,23 @@ interface RuleInterface {
   min?: number;
 }
 
+type ErrorsType = Record<keyof FieldsInterface, string>;
+
 export default function useValidation(
   fields: FieldsInterface,
   rules: RulesInterface,
   options = { immediate: false }
-) {
+): ErrorsType {
   const errors = reactive(
     Object.keys(fields).reduce((errors, field) => {
       if (field in rules) {
         errors[field] = '';
       }
       return errors;
-    }, {} as Record<keyof typeof fields, string>)
+    }, {} as ErrorsType)
   );
 
-  const validate = () => {
+  const validate = (): void => {
     Object.entries(fields).forEach(([key, value]) => {
       const fieldRules = rules[key];
 

@@ -6,7 +6,7 @@
   const userStore = useUserStore();
   const router = useRouter();
 
-  const onLogout = async () => {
+  const onLogout = async (): Promise<void> => {
     await userStore.logout();
     router.replace({ name: 'login' });
   };

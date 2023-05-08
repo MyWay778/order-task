@@ -19,13 +19,15 @@ const router = createRouter({
     {
       path: '/orders',
       name: 'orders',
-      component: () => import('@/pages/OrderList.vue'),
+      component: (): Promise<typeof import('@/pages/OrderList.vue')> =>
+        import('@/pages/OrderList.vue'),
       beforeEnter: authorizationGuard
     },
     {
       path: '/order/add',
       name: 'add order',
-      component: () => import('@/pages/AddOrder.vue'),
+      component: (): Promise<typeof import('@/pages/AddOrder.vue')> =>
+        import('@/pages/AddOrder.vue'),
       beforeEnter: authorizationGuard
     }
   ]

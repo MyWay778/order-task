@@ -2,11 +2,11 @@ import { Request, Response } from 'express';
 import orders from '../data/orders.json';
 import users from '../data/users.json';
 
-export function handleGetOrders(req: Request, res: Response) {
+export function handleGetOrders(req: Request, res: Response): void {
   res.json(orders);
 }
 
-export function handlePatchOrder(req: Request, res: Response) {
+export function handlePatchOrder(req: Request, res: Response): Response | void {
   const { orderId } = req.params;
   const { body, user } = req;
 
@@ -40,7 +40,7 @@ export function handlePatchOrder(req: Request, res: Response) {
   });
 }
 
-export function handleDelete(req: Request, res: Response) {
+export function handleDelete(req: Request, res: Response): Response {
   const { id } = req.params;
   const { user } = req;
 
@@ -66,7 +66,7 @@ export function handleDelete(req: Request, res: Response) {
   return res.sendStatus(200);
 }
 
-export function handleAddOrder(req: Request, res: Response) {
+export function handleAddOrder(req: Request, res: Response): Response | void {
   const { body } = req;
 
   if (!body) {

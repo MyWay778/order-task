@@ -34,7 +34,7 @@ export const userOrderStore = defineStore('orders', () => {
     return orders.value;
   });
 
-  async function fetchOrders() {
+  async function fetchOrders(): Promise<void> {
     try {
       const { data } = await axios.get<OrderModelInterface[]>(api.orders);
       orders.value = data;
@@ -63,27 +63,28 @@ export const userOrderStore = defineStore('orders', () => {
     }
   }
 
-  function setFilter(property: keyof OrderModelInterface, mode: FilterModeType = 'asc') {
+  function setFilter(property: keyof OrderModelInterface, mode: FilterModeType = 'asc'): void {
     filter.property = property;
     filter.mode = mode;
   }
 
-  async function changeStatus(id: number, status: OrderStatusType) {
+  async function changeStatus(id: number, status: OrderStatusType): Promise<boolean> {
     const userStore = useUserStore();
-    if (userStore.user?.role !== 'admin') return;
+    if (userStore.user?.role !== 'admin') return false;
 
     try {
       const { data } = await axios.patch<OrderModelInterface>(`${api.orders}/${id}`, { status });
 
       const foundOrderIdx = orders.value.findIndex((o) => o.id === data.id);
       orders.value[foundOrderIdx] = data;
+      return true;
     } catch (e) {
       console.warn(e);
       return false;
     }
   }
 
-  async function deleteOrder(id: number) {
+  async function deleteOrder(id: number): Promise<void> {
     const userStore = useUserStore();
     if (userStore.user?.role !== 'admin') return;
 
@@ -95,7 +96,7 @@ export const userOrderStore = defineStore('orders', () => {
     }
   }
 
-  async function addOrder(order: NewOrderInterface) {
+  async function addOrder(order: NewOrderInterface): Promise<boolean> {
     try {
       await axios.post(api.orders, order);
       return true;

@@ -31,7 +31,7 @@
   const router = useRouter();
   const userStore = useUserStore();
 
-  const onSubmit = async () => {
+  const onSubmit = async (): Promise<void> => {
     if (Object.keys(errors).length) {
       isShowErrors.value = true;
       return;

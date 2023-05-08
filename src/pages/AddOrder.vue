@@ -3,9 +3,9 @@
   import InputVue from '@/components/UI/InputVue.vue';
   import ModalVue from '@/components/UI/ModalVue.vue';
   import useValidation from '@/composables/useValidation';
-  import getDate from '@/helpers/getDate';
   import { userOrderStore, type NewOrderInterface } from '@/stores/orders';
   import { reactive, ref } from 'vue';
+  import DateService from '@/helpers/DateService';
 
   const order = reactive({
     name: '',
@@ -26,13 +26,13 @@
 
   const orderStore = userOrderStore();
 
-  const onSubmit = async () => {
+  const onSubmit = async (): Promise<void> => {
     if (Object.keys(errors).length) {
       isShowErrors.value = true;
       return;
     }
 
-    const newOrder: NewOrderInterface = { ...order, date: getDate(), status: 'Новый' };
+    const newOrder: NewOrderInterface = { ...order, date: DateService.now(), status: 'Новый' };
     const success = await orderStore.addOrder(newOrder);
     if (success) {
       modalMessage.value = 'Заказ успешно добавлен!';
@@ -42,7 +42,7 @@
     }
   };
 
-  const resetForm = () => {
+  const resetForm = (): void => {
     (Object.keys(order) as Array<keyof typeof order>).forEach((key) => {
       order[key] = '';
     });
@@ -53,7 +53,7 @@
   // Модальное окно
   const modalMessage = ref('');
 
-  const clearModalMessage = () => {
+  const clearModalMessage = (): void => {
     modalMessage.value = '';
   };
 </script>

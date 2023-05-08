@@ -6,7 +6,7 @@ import fsPromises from 'fs/promises';
 import path from 'path';
 import { ITokenPayload } from '../typings/jwt';
 
-export async function handleLogin(req: Request, res: Response) {
+export async function handleLogin(req: Request, res: Response): Promise<Response> {
   const { login, password } = req.body;
   if (!login || !password) {
     return res.status(400).json({ message: 'Не заполнены обязательные поля' });
@@ -50,7 +50,7 @@ export async function handleLogin(req: Request, res: Response) {
   return res.status(403).json({ message: 'Неверный логин / пароль' });
 }
 
-export const handleAuth = (req: Request, res: Response) => {
+export const handleAuth = (req: Request, res: Response): void => {
   const { user } = req;
   if (user) {
     const foundUser = users.find((u) => u.id === Number(user));
@@ -60,7 +60,7 @@ export const handleAuth = (req: Request, res: Response) => {
   }
 };
 
-export const handleRefreshToken = (req: Request, res: Response) => {
+export const handleRefreshToken = (req: Request, res: Response): Response | void => {
   const { cookies } = req;
   if (!cookies?.jwt) return res.sendStatus(401);
   const refreshToken = cookies.jwt as string;
@@ -102,7 +102,7 @@ export const handleRefreshToken = (req: Request, res: Response) => {
   });
 };
 
-export const handleLogout = (req: Request, res: Response) => {
+export const handleLogout = (req: Request, res: Response): Response => {
   const { cookies } = req;
   if (!cookies?.jwt) return res.sendStatus(204);
   const refreshToken = cookies.jwt as string;

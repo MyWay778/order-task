@@ -27,7 +27,7 @@ export const useUserStore = defineStore('user', () => {
 
   const isAdmin = computed(() => user.value?.role === 'admin');
 
-  async function login(userAuth: IUserAuth) {
+  async function login(userAuth: IUserAuth): Promise<boolean> {
     try {
       const { data } = await axios.post<UserModelInterface>(api.login, userAuth, {
         withCredentials: true
@@ -49,7 +49,7 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  async function auth() {
+  async function auth(): Promise<boolean> {
     try {
       const { data } = await axios.get<UserModelInterface>(api.refresh, {
         withCredentials: true
@@ -61,7 +61,7 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  async function logout() {
+  async function logout(): Promise<void> {
     try {
       await axios.get<UserModelInterface>(api.logout, {
         withCredentials: true
